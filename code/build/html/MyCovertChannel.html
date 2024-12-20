@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyCovertChannel module &mdash; Covert Channel 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="CovertChannelBase module" href="CovertChannelBase.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Covert Channel
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Covert Channel</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="CovertChannelBase.html">CovertChannelBase module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MyCovertChannel module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#MyCovertChannel.MyCovertChannel"><code class="docutils literal notranslate"><span class="pre">MyCovertChannel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#MyCovertChannel.MyCovertChannel.decode_mac_to_bits"><code class="docutils literal notranslate"><span class="pre">MyCovertChannel.decode_mac_to_bits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#MyCovertChannel.MyCovertChannel.encode_bits_to_mac"><code class="docutils literal notranslate"><span class="pre">MyCovertChannel.encode_bits_to_mac()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#MyCovertChannel.MyCovertChannel.receive"><code class="docutils literal notranslate"><span class="pre">MyCovertChannel.receive()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#MyCovertChannel.MyCovertChannel.send"><code class="docutils literal notranslate"><span class="pre">MyCovertChannel.send()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#source-code">Source Code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Covert Channel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Covert Channel</a></li>
+      <li class="breadcrumb-item active">MyCovertChannel module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/MyCovertChannel.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-MyCovertChannel">
+<span id="mycovertchannel-module"></span><h1>MyCovertChannel module<a class="headerlink" href="#module-MyCovertChannel" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="MyCovertChannel.MyCovertChannel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MyCovertChannel.</span></span><span class="sig-name descname"><span class="pre">MyCovertChannel</span></span><a class="reference internal" href="_modules/MyCovertChannel.html#MyCovertChannel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MyCovertChannel.MyCovertChannel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="CovertChannelBase.html#CovertChannelBase.CovertChannelBase" title="CovertChannelBase.CovertChannelBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">CovertChannelBase</span></code></a></p>
+<p>Enhanced Covert Storage Channel implementation using ARP Destination MAC Address field.</p>
+<p>BONUS Implementation:
+- Uses last two bytes of MAC address to encode 2 bits per packet
+- First 4 bytes remain constant (00:11:22:33) for packet identification
+- Bytes 5-6 encode two bits using the pattern:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>00:00 for ‘00’</p></li>
+<li><p>00:FF for ‘01’</p></li>
+<li><p>FF:00 for ‘10’</p></li>
+<li><p>FF:FF for ‘11’</p></li>
+</ul>
+</div></blockquote>
+<p>Channel Capacity: ~16.36 bits/second</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MyCovertChannel.MyCovertChannel.decode_mac_to_bits">
+<span class="sig-name descname"><span class="pre">decode_mac_to_bits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mac</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MyCovertChannel.html#MyCovertChannel.decode_mac_to_bits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MyCovertChannel.MyCovertChannel.decode_mac_to_bits" title="Link to this definition"></a></dt>
+<dd><p>Helper function to decode a MAC address into 2 bits</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MyCovertChannel.MyCovertChannel.encode_bits_to_mac">
+<span class="sig-name descname"><span class="pre">encode_bits_to_mac</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MyCovertChannel.html#MyCovertChannel.encode_bits_to_mac"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MyCovertChannel.MyCovertChannel.encode_bits_to_mac" title="Link to this definition"></a></dt>
+<dd><p>Helper function to encode 2 bits into a MAC address</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MyCovertChannel.MyCovertChannel.receive">
+<span class="sig-name descname"><span class="pre">receive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MyCovertChannel.html#MyCovertChannel.receive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MyCovertChannel.MyCovertChannel.receive" title="Link to this definition"></a></dt>
+<dd><p>Receive and decode covert message from enhanced ARP packets</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MyCovertChannel.MyCovertChannel.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packet_delay</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MyCovertChannel.html#MyCovertChannel.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MyCovertChannel.MyCovertChannel.send" title="Link to this definition"></a></dt>
+<dd><p>Send covert message using enhanced ARP packets encoding</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="source-code">
+<h2>Source Code<a class="headerlink" href="#source-code" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="kn">from</span> <span class="nn">CovertChannelBase</span> <span class="kn">import</span> <span class="n">CovertChannelBase</span>
+<span class="linenos">  2</span><span class="kn">from</span> <span class="nn">scapy.layers.l2</span> <span class="kn">import</span> <span class="n">ARP</span><span class="p">,</span> <span class="n">Ether</span>
+<span class="linenos">  3</span><span class="kn">from</span> <span class="nn">scapy.all</span> <span class="kn">import</span> <span class="n">sniff</span><span class="p">,</span> <span class="n">get_if_list</span><span class="p">,</span> <span class="n">conf</span>
+<span class="linenos">  4</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="linenos">  5</span>
+<span class="linenos">  6</span><span class="k">class</span> <span class="nc">MyCovertChannel</span><span class="p">(</span><span class="n">CovertChannelBase</span><span class="p">):</span>
+<span class="linenos">  7</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos">  8</span><span class="sd">    Enhanced Covert Storage Channel implementation using ARP Destination MAC Address field.</span>
+<span class="linenos">  9</span><span class="sd">    </span>
+<span class="linenos"> 10</span><span class="sd">    BONUS Implementation:</span>
+<span class="linenos"> 11</span><span class="sd">    - Uses last two bytes of MAC address to encode 2 bits per packet</span>
+<span class="linenos"> 12</span><span class="sd">    - First 4 bytes remain constant (00:11:22:33) for packet identification</span>
+<span class="linenos"> 13</span><span class="sd">    - Bytes 5-6 encode two bits using the pattern:</span>
+<span class="linenos"> 14</span><span class="sd">      - 00:00 for &#39;00&#39;</span>
+<span class="linenos"> 15</span><span class="sd">      - 00:FF for &#39;01&#39;</span>
+<span class="linenos"> 16</span><span class="sd">      - FF:00 for &#39;10&#39;</span>
+<span class="linenos"> 17</span><span class="sd">      - FF:FF for &#39;11&#39;</span>
+<span class="linenos"> 18</span><span class="sd">    </span>
+<span class="linenos"> 19</span><span class="sd">    Channel Capacity: ~16.36 bits/second </span>
+<span class="linenos"> 20</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos"> 21</span>    
+<span class="linenos"> 22</span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos"> 23</span>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<span class="linenos"> 24</span>        <span class="n">conf</span><span class="o">.</span><span class="n">verb</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos"> 25</span>    
+<span class="linenos"> 26</span>    <span class="k">def</span> <span class="nf">encode_bits_to_mac</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bits</span><span class="p">):</span>
+<span class="linenos"> 27</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper function to encode 2 bits into a MAC address&quot;&quot;&quot;</span>
+<span class="linenos"> 28</span>        <span class="n">base_mac</span> <span class="o">=</span> <span class="s2">&quot;00:11:22:33:&quot;</span>  <span class="c1"># First 4 bytes constant</span>
+<span class="linenos"> 29</span>        <span class="c1"># Encode 2 bits using last two bytes</span>
+<span class="linenos"> 30</span>        <span class="k">if</span> <span class="n">bits</span> <span class="o">==</span> <span class="s2">&quot;00&quot;</span><span class="p">:</span>
+<span class="linenos"> 31</span>            <span class="k">return</span> <span class="n">base_mac</span> <span class="o">+</span> <span class="s2">&quot;00:00&quot;</span>
+<span class="linenos"> 32</span>        <span class="k">elif</span> <span class="n">bits</span> <span class="o">==</span> <span class="s2">&quot;01&quot;</span><span class="p">:</span>
+<span class="linenos"> 33</span>            <span class="k">return</span> <span class="n">base_mac</span> <span class="o">+</span> <span class="s2">&quot;00:FF&quot;</span>
+<span class="linenos"> 34</span>        <span class="k">elif</span> <span class="n">bits</span> <span class="o">==</span> <span class="s2">&quot;10&quot;</span><span class="p">:</span>
+<span class="linenos"> 35</span>            <span class="k">return</span> <span class="n">base_mac</span> <span class="o">+</span> <span class="s2">&quot;FF:00&quot;</span>
+<span class="linenos"> 36</span>        <span class="k">else</span><span class="p">:</span>  <span class="c1"># &quot;11&quot;</span>
+<span class="linenos"> 37</span>            <span class="k">return</span> <span class="n">base_mac</span> <span class="o">+</span> <span class="s2">&quot;FF:FF&quot;</span>
+<span class="linenos"> 38</span>    
+<span class="linenos"> 39</span>    <span class="k">def</span> <span class="nf">decode_mac_to_bits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mac</span><span class="p">):</span>
+<span class="linenos"> 40</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper function to decode a MAC address into 2 bits&quot;&quot;&quot;</span>
+<span class="linenos"> 41</span>        <span class="n">last_two_bytes</span> <span class="o">=</span> <span class="n">mac</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+<span class="linenos"> 42</span>        <span class="n">byte5</span><span class="p">,</span> <span class="n">byte6</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">last_two_bytes</span><span class="p">]</span>
+<span class="linenos"> 43</span>        
+<span class="linenos"> 44</span>        <span class="k">if</span> <span class="n">byte5</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">byte6</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos"> 45</span>            <span class="k">return</span> <span class="s2">&quot;00&quot;</span>
+<span class="linenos"> 46</span>        <span class="k">elif</span> <span class="n">byte5</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">byte6</span> <span class="o">==</span> <span class="mi">255</span><span class="p">:</span>
+<span class="linenos"> 47</span>            <span class="k">return</span> <span class="s2">&quot;01&quot;</span>
+<span class="linenos"> 48</span>        <span class="k">elif</span> <span class="n">byte5</span> <span class="o">==</span> <span class="mi">255</span> <span class="ow">and</span> <span class="n">byte6</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos"> 49</span>            <span class="k">return</span> <span class="s2">&quot;10&quot;</span>
+<span class="linenos"> 50</span>        <span class="k">else</span><span class="p">:</span>  <span class="c1"># byte5 == 255 and byte6 == 255</span>
+<span class="linenos"> 51</span>            <span class="k">return</span> <span class="s2">&quot;11&quot;</span>
+<span class="linenos"> 52</span>    
+<span class="linenos"> 53</span>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_length</span><span class="p">,</span> <span class="n">max_length</span><span class="p">,</span> <span class="n">log_file_name</span><span class="p">,</span> <span class="n">packet_delay</span><span class="p">):</span>
+<span class="linenos"> 54</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;Send covert message using enhanced ARP packets encoding&quot;&quot;&quot;</span>
+<span class="linenos"> 55</span>        <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_random_message</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="n">max_length</span><span class="p">)</span>
+<span class="linenos"> 56</span>        <span class="bp">self</span><span class="o">.</span><span class="n">log_message</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">log_file_name</span><span class="p">)</span>
+<span class="linenos"> 57</span>        
+<span class="linenos"> 58</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sending message: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 59</span>        <span class="n">binary_message</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="s1">&#39;08b&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">message</span><span class="p">)</span>
+<span class="linenos"> 60</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Binary message: </span><span class="si">{</span><span class="n">binary_message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 61</span>        
+<span class="linenos"> 62</span>        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="linenos"> 63</span>        
+<span class="linenos"> 64</span>        <span class="c1"># Send two bits at a time</span>
+<span class="linenos"> 65</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_message</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+<span class="linenos"> 66</span>            <span class="n">bits</span> <span class="o">=</span> <span class="n">binary_message</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+<span class="linenos"> 67</span>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Handle odd number of bits</span>
+<span class="linenos"> 68</span>                <span class="n">bits</span> <span class="o">+=</span> <span class="s2">&quot;0&quot;</span>
+<span class="linenos"> 69</span>                
+<span class="linenos"> 70</span>            <span class="n">arp</span> <span class="o">=</span> <span class="n">Ether</span><span class="p">(</span><span class="n">dst</span><span class="o">=</span><span class="s2">&quot;ff:ff:ff:ff:ff:ff&quot;</span><span class="p">)</span><span class="o">/</span><span class="n">ARP</span><span class="p">(</span>
+<span class="linenos"> 71</span>                <span class="n">op</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="linenos"> 72</span>                <span class="n">hwsrc</span><span class="o">=</span><span class="s2">&quot;02:42:ac:11:00:02&quot;</span><span class="p">,</span>
+<span class="linenos"> 73</span>                <span class="n">psrc</span><span class="o">=</span><span class="s2">&quot;172.18.0.2&quot;</span><span class="p">,</span>
+<span class="linenos"> 74</span>                <span class="n">hwdst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encode_bits_to_mac</span><span class="p">(</span><span class="n">bits</span><span class="p">),</span>
+<span class="linenos"> 75</span>                <span class="n">pdst</span><span class="o">=</span><span class="s2">&quot;172.18.0.3&quot;</span>
+<span class="linenos"> 76</span>            <span class="p">)</span>
+<span class="linenos"> 77</span>            
+<span class="linenos"> 78</span>            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">arp</span><span class="p">,</span> <span class="n">interface</span><span class="o">=</span><span class="s2">&quot;eth0&quot;</span><span class="p">)</span>
+<span class="linenos"> 79</span>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sent bits: </span><span class="si">{</span><span class="n">bits</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 80</span>            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">packet_delay</span><span class="p">)</span>
+<span class="linenos"> 81</span>        
+<span class="linenos"> 82</span>        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="linenos"> 83</span>        <span class="n">duration</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="linenos"> 84</span>        <span class="n">capacity</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_message</span><span class="p">)</span> <span class="o">/</span> <span class="n">duration</span>
+<span class="linenos"> 85</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Enhanced channel capacity: </span><span class="si">{</span><span class="n">capacity</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> bits/second&quot;</span><span class="p">)</span>
+<span class="linenos"> 86</span>    
+<span class="linenos"> 87</span>    <span class="k">def</span> <span class="nf">receive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_file_name</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
+<span class="linenos"> 88</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;Receive and decode covert message from enhanced ARP packets&quot;&quot;&quot;</span>
+<span class="linenos"> 89</span>        <span class="n">received_bits</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos"> 90</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting enhanced receiver on eth0 (timeout: </span><span class="si">{</span><span class="n">timeout</span><span class="si">}</span><span class="s2">s)&quot;</span><span class="p">)</span>
+<span class="linenos"> 91</span>        
+<span class="linenos"> 92</span>        <span class="k">def</span> <span class="nf">packet_callback</span><span class="p">(</span><span class="n">packet</span><span class="p">):</span>
+<span class="linenos"> 93</span>            <span class="k">if</span> <span class="n">ARP</span> <span class="ow">in</span> <span class="n">packet</span><span class="p">:</span>
+<span class="linenos"> 94</span>                <span class="c1"># Check if it&#39;s our covert channel packet</span>
+<span class="linenos"> 95</span>                <span class="k">if</span> <span class="n">packet</span><span class="p">[</span><span class="n">ARP</span><span class="p">]</span><span class="o">.</span><span class="n">hwdst</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;00:11:22:33&quot;</span><span class="p">):</span>
+<span class="linenos"> 96</span>                    <span class="n">mac</span> <span class="o">=</span> <span class="n">packet</span><span class="p">[</span><span class="n">ARP</span><span class="p">]</span><span class="o">.</span><span class="n">hwdst</span>
+<span class="linenos"> 97</span>                    <span class="n">bits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode_mac_to_bits</span><span class="p">(</span><span class="n">mac</span><span class="p">)</span>
+<span class="linenos"> 98</span>                    <span class="n">received_bits</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">bits</span><span class="p">))</span>
+<span class="linenos"> 99</span>                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received bits: </span><span class="si">{</span><span class="n">bits</span><span class="si">}</span><span class="s2"> from MAC: </span><span class="si">{</span><span class="n">mac</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">100</span>        
+<span class="linenos">101</span>        <span class="k">try</span><span class="p">:</span>
+<span class="linenos">102</span>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Waiting for packets...&quot;</span><span class="p">)</span>
+<span class="linenos">103</span>            <span class="n">sniff</span><span class="p">(</span>
+<span class="linenos">104</span>                <span class="n">iface</span><span class="o">=</span><span class="s2">&quot;eth0&quot;</span><span class="p">,</span>
+<span class="linenos">105</span>                <span class="nb">filter</span><span class="o">=</span><span class="s2">&quot;arp&quot;</span><span class="p">,</span>
+<span class="linenos">106</span>                <span class="n">prn</span><span class="o">=</span><span class="n">packet_callback</span><span class="p">,</span>
+<span class="linenos">107</span>                <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+<span class="linenos">108</span>                <span class="n">store</span><span class="o">=</span><span class="mi">0</span>
+<span class="linenos">109</span>            <span class="p">)</span>
+<span class="linenos">110</span>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="linenos">111</span>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error during capture: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">112</span>        
+<span class="linenos">113</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Capture complete. Received </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">received_bits</span><span class="p">)</span><span class="si">}</span><span class="s2"> bits&quot;</span><span class="p">)</span>
+<span class="linenos">114</span>        
+<span class="linenos">115</span>        <span class="k">if</span> <span class="ow">not</span> <span class="n">received_bits</span><span class="p">:</span>
+<span class="linenos">116</span>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No bits received&quot;</span><span class="p">)</span>
+<span class="linenos">117</span>            <span class="k">return</span>
+<span class="linenos">118</span>        
+<span class="linenos">119</span>        <span class="c1"># Convert bits to message</span>
+<span class="linenos">120</span>        <span class="n">bits</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">received_bits</span><span class="p">)</span>
+<span class="linenos">121</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received bits: </span><span class="si">{</span><span class="n">bits</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">122</span>        
+<span class="linenos">123</span>        <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="linenos">124</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bits</span><span class="p">),</span> <span class="mi">8</span><span class="p">):</span>
+<span class="linenos">125</span>            <span class="n">byte</span> <span class="o">=</span> <span class="n">bits</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>
+<span class="linenos">126</span>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+<span class="linenos">127</span>                <span class="n">message</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="linenos">128</span>        
+<span class="linenos">129</span>        <span class="bp">self</span><span class="o">.</span><span class="n">log_message</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">log_file_name</span><span class="p">)</span>
+<span class="linenos">130</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; message: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CovertChannelBase.html" class="btn btn-neutral float-left" title="CovertChannelBase module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, METU - Computer Engineering Department.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

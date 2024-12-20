@@ -3,11 +3,16 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Covert Channel documentation
-============================
+Welcome to COVERTOVERT's documentation!
+=====================================
 
-Please add your names, group ID, and your link to the forked public repository here by editing `index.rst` in the docs folder.
-
+Group Information
+---------------
+- Group ID: [23]
+- Members:
+    - [Pınar Aksoy] 
+    - [Yusufhan Ali Üstün]
+- Repository: [https://github.com/0xpinara/covertovert]
 
 .. toctree::
    :maxdepth: 2
