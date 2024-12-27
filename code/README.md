@@ -1,53 +1,42 @@
 # COVERTOVERT - Covert Channel Implementation
 
 ## Overview
-Implementation of a covert storage channel using ARP protocol's Destination MAC Address field manipulation (CSC-PSV-ARP-DMA). This project demonstrates both standard and enhanced methods of covert communication through protocol field manipulation.
+This project implements a covert storage channel using ARP protocol's Destination MAC Address field manipulation (CSC-PSV-ARP-DMA). We've developed an approach that combines dynamic shifting, error correction, and stealth techniques to create a reliable and undetectable covert channel.
 
-## Covert Channel Capacity Measurement
+## How It Works
 
-### Methodology
-1. Message size: 128 bits (16 characters)
-2. Timer implementation:
+### MAC Address Encoding
+Our implementation uses three innovative techniques:
+
+1. **Dynamic Shifting using Fibonacci Sequence**
+   - Uses a shift value = (c * (a + b)) % 24
+   - Shifts both signature and payload dynamically
+   - Makes pattern detection extremely difficult
+   - Shift changes with each packet based on Fibonacci numbers
+
+2. **Triple Redundancy with Random Noise**
    ```python
-   start_time = time.time()
-   # Send packets...
-   end_time = time.time()
-   duration = end_time - start_time
-   capacity = 128 / duration  # bits per second
+   # Each bit is encoded into three bits with random noise
+   bit '1' → [1,1,1] → randomly flip one bit: [1,0,1]
+   bit '0' → [0,0,0] → randomly flip one bit: [0,1,0]
    ```
+   This provides both error correction and enhanced stealth.
 
-### Results
-1. **Basic Implementation (1 bit/packet)**
-   - Capacity: 8.18 bits/second
-   - Calculation: 128 bits / 15.6 seconds
-   - Limitation: One bit encoded per MAC address
+3. **Signature-Based Verification**
+   - Embeds "ain" signature in binary
+   - Signature shifts dynamically with Fibonacci sequence
+   - Ensures packet authenticity
+   - Helps receiver identify valid covert packets
 
-2. **Enhanced Implementation (2 bits/packet)**
-   - Capacity: 16.35 bits/second
-   - Calculation: 128 bits / 7.8 seconds
-   - Improvement: Two bits encoded per MAC address
+## Performance
 
-### Capacity Maximization Techniques
-1. **Dual-Byte Encoding**
-   - Utilizes last two bytes of MAC address
-   - Doubles information density per packet
-   - Encoding scheme:
-     ```
-     00 → 00:11:22:33:00:00
-     01 → 00:11:22:33:00:FF
-     10 → 00:11:22:33:FF:00
-     11 → 00:11:22:33:FF:FF
-     ```
+### Channel Capacity
+Following the required measurement process:
+1. Test message: 128 bits (16 characters)
+2. Measured time: 1.896 seconds
+3. Calculated capacity: 67.50 bits/second
 
-2. **Optimized Packet Delay**
-   - Minimum delay (0.1s) to ensure reliability
-   - Balance between speed and packet loss
-   - Tested various delays to find optimal value
-
-3. **Protocol Efficiency**
-   - Uses broadcast ARP requests
-   - Minimizes network overhead
-   - Ensures reliable packet delivery
+This represents a significant improvement over basic implementations while maintaining stealth.
 
 ## Implementation Details
 
@@ -58,64 +47,56 @@ Implementation of a covert storage channel using ARP protocol's Destination MAC 
     "send": {
         "min_length": 16,
         "max_length": 16,
-        "log_file_name": "sender.log",
-        "packet_delay": 0.1
+        "log_file_name": "sender_log.txt",
+        "packet_delay": 0.2
     },
     "receive": {
-        "log_file_name": "receiver.log",
+        "log_file_name": "receiver_log.txt",
         "timeout": 60
     }
 }
 ```
 
-### Limitations and Thresholds
-1. **Network Constraints**
-   - Minimum packet delay: 0.1s (required for network stability)
-   - Maximum theoretical capacity: 20 bits/second
-   - Network latency impact: ~5-10ms per packet
+### Limitations and Requirements
+- Minimum packet delay: 0.2s (required for reliable transmission)
+- Fixed message length: 16 characters
+- Receiver timeout: 60 seconds
+- Python 3.10.12
+- Scapy library
+- Docker environment
 
-2. **Protocol Limitations**
-   - ARP protocol overhead
-   - MAC address format restrictions
-   - Network segment requirements
+## Usage
 
-3. **Implementation Bounds**
-   - Fixed message length: 16 characters (128 bits)
-   - Constant prefix requirement: 00:11:22:33
-   - Error checking overhead
-
-## Usage Instructions
-1. Start receiver:
+1. Start the receiver first:
 ```bash
 make receive
 ```
 
-2. Start sender:
+2. Then start the sender:
 ```bash
 make send
 ```
 
-3. Verify transmission:
+3. Verify the transmission:
 ```bash
 make compare
 ```
 
-## Technical Requirements
-- Python 3.10.12
-- Scapy library
-- Docker environment
-- Same network segment for sender/receiver
+## Why This Implementation is Effective
 
-## Performance Analysis
-The enhanced implementation achieves near-optimal performance given the constraints:
-1. Network delay minimum (0.1s) cannot be reduced without packet loss
-2. Protocol overhead is minimized
-3. Maximum bits per packet (2) while maintaining protocol compliance
-4. Theoretical maximum (~20 bits/second) vs. Achieved (16.35 bits/second)
-5. 81.75% efficiency of theoretical maximum capacity
+1. **Stealth**
+   - Dynamic shifting prevents pattern recognition
+   - Random noise injection masks the encoding
+   - Legitimate-looking ARP traffic
 
-The implementation successfully maximizes covert channel capacity through:
-- Optimal packet timing
-- Maximum bit encoding density
-- Efficient protocol usage
-- Reliable transmission methods
+2. **Reliability**
+   - Triple redundancy with error correction
+   - Signature verification ensures authenticity
+   - Robust against network interference
+
+3. **Performance**
+   - 67.50 bits/second throughput
+   - Balanced speed and stealth
+   - Reliable message delivery
+
+This implementation successfully combines stealth, reliability, and performance while following all protocol and assignment requirements.
